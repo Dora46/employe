@@ -31,6 +31,7 @@ public class SonarDemo {
         return false;
     }
 
+
     // 6. Méthode privée jamais utilisée
     private void unusedMethod() {
         System.out.println("Never used");
