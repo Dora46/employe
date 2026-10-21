@@ -33,9 +33,14 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build & Test
+      - name: Build, Test & Sonar Analysis
         env:
-          SPRING_DATASOURCE_URL: jdbc:mysql://127.0.0.1:3306/employedemo?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-          SPRING_DATASOURCE_USERNAME: root
-          SPRING_DATASOURCE_PASSWORD: root
-        run: mvn clean verify sonar:sonar -Dsonar.token=${{ secrets.SONAR_TOKEN }}
+          SPRING_DATASOURCE_URL: ${{ secrets.DB_URL }}
+          SPRING_DATASOURCE_USERNAME: ${{ secrets.DB_USERNAME }}
+          SPRING_DATASOURCE_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn clean verify \
+            -Dspring.datasource.url="${{ secrets.DB_URL }}" \
+            -Dspring.datasource.username="${{ secrets.DB_USERNAME }}" \
+            -Dspring.datasource.password="${{ secrets.DB_PASSWORD }}"
